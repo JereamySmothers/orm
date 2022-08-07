@@ -7,16 +7,37 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 router.get('/', (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
+  Product.findAll ({
+    include: [Category],
+  })
+  .then((dbProductData) => res.json(dbProductData))
+  if (err) throw err;
 });
 
 // get one product
 router.get('/:id', (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
+  Category.findOne({
+    where: {
+      id: req.params.id,
+    },
+    include: [Category, Tag],
+  })
+    .then((dbCategoryData) => res.json(dbCategoryData))
+  if (err) throw err;
 });
 
 // create new product
 router.post('/', (req, res) => {
+  Product.create ({
+    id: req.body.id,
+    product_name: req.body.product_name,
+    price: req.body.price,
+    stock: req.body.stock,
+  })
+  .then((dbProductData) => res.json(dbProductData))
+  if (err) throw err;
   /* req.body should look like this...
     {
       product_name: "Basketball",
@@ -91,6 +112,19 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
+  Product.destroy ({
+    where: {
+      id: req.params.id,
+    },
+  })
+  .then((dbProductData) => {
+    if (!dbProductData) {
+      res.status(404).json({message: "NO CATEGORY WITH THE CORRESPONDING ID"});
+      return;
+    }
+    res.json(dbProductData);
+  })
+  if (err) throw err;
 });
 
 module.exports = router;
