@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
   Tag.findAll({
     include: [ProductTag, Product],
   })
-  .then((dbTagData) => res.json(dbTagData))
+    .then((dbTagData) => res.json(dbTagData))
   if (err) throw err;
 });
 
@@ -22,7 +22,7 @@ router.get('/:id', (req, res) => {
     },
     include: [ProductTag, Product],
   })
-  .then((dbTagData) => res.json(dbTagData))
+    .then((dbTagData) => res.json(dbTagData))
   if (err) throw err;
 });
 
@@ -32,7 +32,7 @@ router.post('/', (req, res) => {
     id: req.body.id,
     tag_name: req.body.tag_name,
   })
-  .then((dbTagData) => res.json(dbTagData))
+    .then((dbTagData) => res.json(dbTagData))
   if (err) throw err;
 });
 
@@ -75,7 +75,8 @@ router.delete('/:id', (req, res) => {
         }
         res.json(dbTagData);
       })
-    if (err) throw err;
+    if(err) throw err;
+  });
 });
 
-module.exports = router;
+  module.exports = router;
