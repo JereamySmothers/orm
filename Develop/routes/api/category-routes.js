@@ -75,7 +75,6 @@ router.delete('/:id', (req, res) => {
         }
         res.json(dbCategoryData);
       })
-    if (err) throw err;
   })
 });
 
